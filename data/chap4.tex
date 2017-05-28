@@ -1,6 +1,65 @@
-\chapter{实验结果}
+\chapter{实验结果与分析}
+本章将对实验进行检验并对比分析：将统计各个类的AP值并做出PR曲线；预测效果展示，并展现其中效果不佳的结果；探究实验泛化性能力。
+\section{实验平台}{
+	基本环境：
+	\begin{enumerate}
+		\item 操作系统： CentOS Linux release 7.1
+		\item 显卡： GTX1080
+		\item CUDA版本： 8.0
+		\item 实验框架： Darknet
+		\item 数据集： KITTI
+	\end{enumerate}
 
-\section{第一节}
+	YOLO训练参数：
+	\begin{enumerate}
+		\item batch size: 64
+		\item width: 416
+		\item height: 416
+		\item channels: 3
+		\item momentum: 0.9
+		\item decay: 0.0005
+		\item learing rate: 0.001
+		\item max batches: 50000
+	\end{enumerate}
+
+	tiny-YOLO训练参数：
+	\begin{enumerate}
+		\item batch size: 64
+		\item width: 416
+		\item height: 416
+		\item channels: 3
+		\item momentum: 0.9
+		\item decay: 0.0005
+		\item learing rate: 0.001
+		\item max batches: 50000
+	\end{enumerate}
+}
+
+\section{结果对比}{
+	\subsection{AP比较}
+	我们首先对比本项目各个模型对于各个类的AP值以及FPS比较，如图\ref{}。
+
+	通过图表，我们可以发现虽然tiny-YOLO的速度比YOLO的速度快上2-3倍，但是效率远不如YOLO。从速度上来看，YOLO能达到每秒45帧的速度，已经基本可以满足实时行人检测的需求，tiny-YOLO甚至然能够达到每秒近百帧的速度，两个模型均能满足实时行人检测的要求。从效率上来看，不管是哪个类的AP值，YOLO都全面领先于tiny-YOLO，尤其是在行人和自行车的检测上，而YOLO不仅在行人和自行车上能达到0.5的AP值，在车辆检测上更是能达到接近0.7的AP值，效果较好。
+
+	从整体上看，模型对车辆的检测明显高于对行人和自行车的检测，这是由于KITTI数据集中车辆数据较多造成的。而模型的整体表现也部分受限于训练数据过少。
+
+	对比Faster R-CNN，不管是YOLO还是tiny-YOLO，在速度上都比Faster R-CNN要快上很多，而YOLO的效率却并没有比Faster R-CNN的效率低多少。
+
+	总的来说，YOLO在AP上的表现达到预期效果，而tiny-YOLO虽然速度很快，但是效率上损失过多。
+
+	\subsection{PR曲线比较}
+	我们分别对各个模型各个类做出PR曲线并进行比较，结果如图\ref{}。
+}
+
+\section{预测效果}{
+	\subsection{效果展示}
+
+	\subsection{错误结果分析}
+}
+
+\section{泛化性}{
+	本项目讨论实时行人检测的可行性，针对日常生活驾驶、极端天气、夜晚等各种情形进行实验。
+}
 
 \section{本章小结}
 

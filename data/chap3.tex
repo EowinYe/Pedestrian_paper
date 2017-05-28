@@ -78,7 +78,7 @@
 
 	3.更新TP（true positive），FP（false positive）：选取匹配的真值中IOU最高的IOU。如果IOU大于阈值（0.5）并且该真值没有被检测到过TP就加一，否则FP加一。
 
-	4.计算AP值：找到score降序的数组中，所有TP加一的位置，然后将这些位置i乘以前i个预测的准确率，再求和
+	4.计算AP值：做出PR曲线，找到score降序的数组中，所有TP加一的位置，然后将这些位置i乘以前i个预测的准确率，再求和
 	$$AP = \sum_{IOU>thresh}1*pre(i) / N$$其中N是真值的数量。
 }
 
