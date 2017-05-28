@@ -26,15 +26,63 @@
 	然后，我们需要生存可以供Darknet读入的train_list和test_list，如图\ref{}。这里直接将图片的前7000张作为训练图片，后480张作为测试图片然后生成对应的list文件即可。
 }
 
-\section{关键技术}{
-	
-}
-
 \section{网络结构}{
-	
+网络结构参考YOLO的网络结构，在前面的章节我们已经讨论过YOLO的关键技术，这一节将主要讨论具体实现过程中的网络结构选择。
+
+\subsection{损失函数}{
+	损失函数是使用的平方误差。
+
+	我们优化了模型输出中的平方误差。我们使用平方误差，因为它很容易优化，但是它不能完全符合我们的最大化平均精度的目标。我们增加了边界框坐标预测的损失，并减少了对不包含对象的框的置信预测的损失。我们使用两个参数，$\lambda_{coord}$和$\lambda_{noobj}$来完成这个。我们设置$\lambda_{coord}=5$和$\lambda_{noobj}=0.5$。平方误差也平等地对待大框和小框中的误差。 我们的误差度量应该反映出，大框中的小偏差比小框小。为了部分解决这个问题，我们直接预测边界框宽度和高度的平方根，而不是宽度和高度。
+
+	在训练期间，我们优化以下多部分损失函数：
+	\begin{eqnarray*}
+	\lambda_{coord} \sum_{i=0}^{S^2} \sum_{j=0}^B 1_{ij}^{obj} (x_i - \hat{x_i})^2 + (y_i - \hat{y_i})^2 \\
+	+ \lambda_{coord} \sum_{i=0}^{S^2} \sum_{j=0}^B 1_{ij}^{obj} (\sqrt{w_i} - \sqrt{\hat{w_i}})^2 + (\sqrt{h_i} - \sqrt{\hat{h_i}})^2 \\
+	+ \sum_{i=0}^{S^2} \sum_{j=0}^B 1_{ij}^{obj} (C_i - \hat{C_i})^2 \\
+	+ \lambda_{noobj} \sum_{i=0}^{S^2} \sum_{j=0}^B 1_{ij}^{noobj} (C_i - \hat{C_i})^2 \\
+	+ \sum_{i=0}^{S^2} 1_{i}^{obj} \sum_{c \in classes} (p_i(c) - \hat{p_i}(c))^2
+	\end{eqnarray*}
+
+	其中$1_i^{obj}$表示如果对象出现在单元i中，并且$1_{ij}^{obj}$表示单元i中的第j个边界框预测器对于该预测是“负责的”。如果对象存在于该网格单元中，损失函数只会惩罚分类错误。 如果该预测因子对于真值框是“负责的”，则它也只对边界框坐标误差进行估计（即具有该网格单元中的任何预测变量的最高IOU）。
 }
 
-\section{验证方法}
+\subsection{完整网络结构YOLO}{
+	如图\ref{}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{}：
 
-\section{本章小结}
+	该网络比较大，实际训练过程中所需显存较多，训练出来的模型参数更多，理论上效果也会更好，不过速度会偏慢。
+}
+
+\subsection{缩小网络结构tiny-YOLO}{
+	针对速度的要求，我们又采用了一种tiny-YOLO的网络来进行试验。
+
+	tiny-YOLO仅有9个卷积层，并且每个卷积层使用了更少的滤波器（输出的特征），其它网络结构和之前的网络结构一样。理论上来说，tiny-YOLO将实现非常快速度的检测，同时模型大小也将降低不少，不过将造成部分精度的损失。
+}
+}
+
+\section{验证方法}{
+	本项目将采用计算各个类别的AP（Average Precision）的方法实现对检测结果的评估。
+
+	训练好的模型对于每张图片会返回各个框的检测结果（x,y,w,h,class,precision)。而在实际验证中，每个类别会返回所有大于阈值的检测结果，如图\ref{}。每种类都有单独的文件存放检测结果，文件形式为(img_id, Xmin, Ymin, Xmax, Ymax, score)。我们就需要用这个检测结果和原标签对比，得到最终的实验结果。
+
+	对于每个类，AP的具体算法如下：
+
+	1.按照预测结果的score将预测结果按降序排序。
+
+	2.对于每个预测结果$(\hat{X}_{min},\hat{Y}_{min},\hat{X}_{max},\hat{Y}_{max}$，找到所对应的文件中该类的各个真值$({X}_{imin},{Y}_{imin},{X}_{imax},{Y}_{imax}$，计算覆盖量IOU
+
+	$$intersection = (max(\hat{X}_{min},{X}_{imin}) - min(\hat{X}_{max},{X}_{imax})) * (max(\hat{Y}_{min},{Y}_{imin}) - min(\hat{Y}_{max},{Y}_{imax}))$$
+
+	$$union = (\hat{X}_{max} - \hat{X}_{min}) * (\hat{Y}_{max} - \hat{Y}_{min}) + ({X}_{imax} - {X}_{imin}) * ({Y}_{imax} - {Y}_{imin}) - intersection$$
+
+	$$IOU = union / intersection$$
+
+	3.更新TP（true positive），FP（false positive）：选取匹配的真值中IOU最高的IOU。如果IOU大于阈值（0.5）并且该真值没有被检测到过TP就加一，否则FP加一。
+
+	4.计算AP值：找到score降序的数组中，所有TP加一的位置，然后将这些位置i乘以前i个预测的准确率，再求和
+	$$AP = \sum_{IOU>thresh}1*pre(i) / N$$其中N是真值的数量。
+}
+
+\section{本章小结}{
+	本章主要讲述了本项目的整体研究流程。首先从数据集的处理上分析了KITTI数据集的特征，以及转换成YOLO所需的格式的数据预处理等；接着，我们讨论了该项目网络的损失函数，分析了所使用的各种网络结构；最后，我们讨论了测试结构的格式以及相对应的验证方法AP。
+}
 
