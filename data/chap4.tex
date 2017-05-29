@@ -35,9 +35,24 @@
 	\end{enumerate}
 }
 
+\newpage
+
 \section{结果对比}{
 	\subsection{AP比较}
-	我们首先对比本项目各个模型对于各个类的AP值以及FPS比较，如图\ref{}。
+	\begin{table}  
+	\caption{各模型各类AP和FPS结果对比}  
+	\begin{tabular}{l|p{2cm}p{2cm}p{2cm}p{2cm}}  
+	\hline  
+	             & Pedestrian & Car & Cyclist & FPS \\  
+	\hline  
+	Faster R-CNN & 4DB5 & & \\  
+	YOLO         & 9FFF & & \\
+	tiny-YOLO    & 9FFF & & \\
+	\hline
+	\end{tabular}
+	\label{AP}
+	\end{table} 
+	我们首先对比本项目各个模型对于各个类的AP值以及FPS比较，如表\ref{AP}。
 
 	通过图表，我们可以发现虽然tiny-YOLO的速度比YOLO的速度快上2-3倍，但是效率远不如YOLO。从速度上来看，YOLO能达到每秒45帧的速度，已经基本可以满足实时行人检测的需求，tiny-YOLO甚至然能够达到每秒近百帧的速度，两个模型均能满足实时行人检测的要求。从效率上来看，不管是哪个类的AP值，YOLO都全面领先于tiny-YOLO，尤其是在行人和自行车的检测上，而YOLO不仅在行人和自行车上能达到0.5的AP值，在车辆检测上更是能达到接近0.7的AP值，效果较好。
 

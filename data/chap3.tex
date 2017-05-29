@@ -13,17 +13,17 @@
 
 	首先，我们需要把数据集转换为Darknet所需要的形式，如图\ref{}。Darknet中：每行第一列是类的序号，第二列是框中心的x坐标，第三列是框中心的y坐标，第四列是框的宽度，第五列是框的高度。另外这四个数据都需要归一化到0-1之间。所以我们需要将KITTI标签中的（Xmin，Ymin，Xmax，Ymax）四个坐标进行下面的变换：
 
-	$X = (X_min + X_max) / (2 * Weight)$
+	$X = (X_{min} + X_{max}) / (2 * Weight)$
 
-	$Y = (Y_min + Y_max) / (2 * Height）$
+	$Y = (Y_{min} + Y_{max}) / (2 * Height）$
 
-	$W = (X_max - X_min) / Weight$
+	$W = (X_{max} - X_{min}) / Weight$
 
-	$H = (Y_max - Y_min) / Height$
+	$H = (Y_{max} - Y_{min}) / Height$
 
-	来变换到归一化后的（X，Y，W，H）。另外由于KITTI数据集中的类过多，我们适当调整为仅有三类：Car、Pedestrian、Cyclist，对应到0、1、2的标签。将原数据集中的Car、Van、Truck、Tram转换成Car；Pedestrian、Person_sitting转换成Pedestrian；Cyclist转换成Cyclist；同时忽略掉Misc和DontCare的类。
+	来变换到归一化后的（X，Y，W，H）。另外由于KITTI数据集中的类过多，我们适当调整为仅有三类：Car、Pedestrian、Cyclist，对应到0、1、2的标签。将原数据集中的Car、Van、Truck、Tram转换成Car；Pedestrian、Person\_sitting转换成Pedestrian；Cyclist转换成Cyclist；同时忽略掉Misc和DontCare的类。
 
-	然后，我们需要生存可以供Darknet读入的train_list和test_list，如图\ref{}。这里直接将图片的前7000张作为训练图片，后480张作为测试图片然后生成对应的list文件即可。
+	然后，我们需要生存可以供Darknet读入的train\_list和test\_list，如图\ref{}。这里直接将图片的前7000张作为训练图片，后480张作为测试图片然后生成对应的list文件即可。
 }
 
 \section{网络结构}{
@@ -47,7 +47,7 @@
 }
 
 \subsection{完整网络结构YOLO}{
-	如图\ref{}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{}：
+	如图\ref{}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias\_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{}：
 
 	该网络比较大，实际训练过程中所需显存较多，训练出来的模型参数更多，理论上效果也会更好，不过速度会偏慢。
 }
@@ -62,13 +62,13 @@
 \section{验证方法}{
 	本项目将采用计算各个类别的AP（Average Precision）的方法实现对检测结果的评估。
 
-	训练好的模型对于每张图片会返回各个框的检测结果（x,y,w,h,class,precision)。而在实际验证中，每个类别会返回所有大于阈值的检测结果，如图\ref{}。每种类都有单独的文件存放检测结果，文件形式为(img_id, Xmin, Ymin, Xmax, Ymax, score)。我们就需要用这个检测结果和原标签对比，得到最终的实验结果。
+	训练好的模型对于每张图片会返回各个框的检测结果（x,y,w,h,class,precision)。而在实际验证中，每个类别会返回所有大于阈值的检测结果，如图\ref{}。每种类都有单独的文件存放检测结果，文件形式为(img\_id, Xmin, Ymin, Xmax, Ymax, score)。我们就需要用这个检测结果和原标签对比，得到最终的实验结果。
 
 	对于每个类，AP的具体算法如下：
 
 	1.按照预测结果的score将预测结果按降序排序。
 
-	2.对于每个预测结果$(\hat{X}_{min},\hat{Y}_{min},\hat{X}_{max},\hat{Y}_{max}$，找到所对应的文件中该类的各个真值$({X}_{imin},{Y}_{imin},{X}_{imax},{Y}_{imax}$，计算覆盖量IOU
+	2.对于每个预测结果$(\hat{X}_{min},\hat{Y}_{min},\hat{X}_{max},\hat{Y}_{max})$，找到所对应的文件中该类的各个真值$({X}_{imin},{Y}_{imin},{X}_{imax},{Y}_{imax})$，计算覆盖量IOU
 
 	$$intersection = (max(\hat{X}_{min},{X}_{imin}) - min(\hat{X}_{max},{X}_{imax})) * (max(\hat{Y}_{min},{Y}_{imin}) - min(\hat{Y}_{max},{Y}_{imax}))$$
 
