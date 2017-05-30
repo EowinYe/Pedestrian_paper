@@ -1,21 +1,45 @@
 \chapter{研究方案}
-本项目分为四块内容：KITTI数据集的转换以及数据预处理，YOLO关键技术的实现，网络结构的调整与优化，测试结构的评估方法。
+本项目分为四块内容：KITTI数据集的转换以及数据预处理，YOLO关键技术的实现，网络结构的调整与优化，测试模型的评估方法。
 \section{数据预处理}{
 	\subsection{KITTI数据集详解}
-	KITTI数据集中共有7480张图片可以用来训练和测试。图\ref{}展示了KITTI数据集的典型样本，分为 ’Road’, ’City’, ’Residential’, ’Campus’ 和’Person’五类。原始数据采集于2011年的5天，共有180GB数据。
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/KITTIForm.jpg}
+	\caption{KITTI格式}
+	\label{KITTIForm}
+	\end{figure}
+	KITTI数据集中共有7480张图片可以用来训练和测试。图\ref{KITTIForm}展示了KITTI数据集的典型样本，分为 ’Road’, ’City’, ’Residential’, ’Campus’ 和’Person’五类。原始数据采集于2011年的5天，共有180GB数据。
 
-	数据图像如图\ref{}，每张图片大小在1224*370左右。每张图片最多可显示15辆汽车和30名行人。
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/007435.png}
+	\caption{KITTI图像}
+	\label{007435}
+	\end{figure}
+	数据图像如图\ref{007435}，每张图片大小在1224*370左右。每张图片最多可显示15辆汽车和30名行人。
 
-	数据标签如图\ref{},标签格式如图\ref{}，每行是一个单独的物体。第一列是类名，而KITTI总共把所有的物体分了八个类（还有一个类名是DontCare，表示该区域没有被标注，防止假阳性）；第二列代表物体超出边界多少；第三列表示物体被覆盖的情况；第四列是观察物体的角度；第五列到第八列是物体在图片中的位置（Xmin，Ymin，Xmax，Ymax）；第九列到第十一列是三维物体的长宽高；第十二列到第十四列是三维物体在摄像机中的坐标（x，y，z），第十五列是物体在摄像机的坐标中离y轴的弧度。
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/KITTILable.png}
+	\caption{KITTI标签}
+	\label{KITTILable}
+	\end{figure}
+	数据标签如图\ref{KITTILable},每行是一个单独的物体。第一列是类名，而KITTI总共把所有的物体分了八个类（还有一个类名是DontCare，表示该区域没有被标注，防止假阳性）；第二列代表物体超出边界多少；第三列表示物体被覆盖的情况；第四列是观察物体的角度；第五列到第八列是物体在图片中的位置（Xmin，Ymin，Xmax，Ymax）；第九列到第十一列是三维物体的长宽高；第十二列到第十四列是三维物体在摄像机中的坐标（x，y，z），第十五列是物体在摄像机的坐标中离y轴的弧度。
 
 	\subsection{数据转换和预处理}
 	在实验过程中，我们将前7000张图片作为训练图片，后480张图片作为测试图片。
 
-	首先，我们需要把数据集转换为Darknet所需要的形式，如图\ref{}。Darknet中：每行第一列是类的序号，第二列是框中心的x坐标，第三列是框中心的y坐标，第四列是框的宽度，第五列是框的高度。另外这四个数据都需要归一化到0-1之间。所以我们需要将KITTI标签中的（Xmin，Ymin，Xmax，Ymax）四个坐标进行下面的变换：
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/darknetLabel.png}
+	\caption{Darknet标签}
+	\label{darknetLabel}
+	\end{figure}
+	首先，我们需要把数据集转换为Darknet所需要的形式，如图\ref{darknetLabel}。Darknet中：每行第一列是类的序号，第二列是框中心的x坐标，第三列是框中心的y坐标，第四列是框的宽度，第五列是框的高度。另外这四个数据都需要归一化到0-1之间。所以我们需要将KITTI标签中的（Xmin，Ymin，Xmax，Ymax）四个坐标进行下面的变换：
 
 	$X = (X_{min} + X_{max}) / (2 * Weight)$
 
-	$Y = (Y_{min} + Y_{max}) / (2 * Height）$
+	$Y = (Y_{min} + Y_{max}) / (2 * Height)$
 
 	$W = (X_{max} - X_{min}) / Weight$
 
@@ -23,7 +47,13 @@
 
 	来变换到归一化后的（X，Y，W，H）。另外由于KITTI数据集中的类过多，我们适当调整为仅有三类：Car、Pedestrian、Cyclist，对应到0、1、2的标签。将原数据集中的Car、Van、Truck、Tram转换成Car；Pedestrian、Person\_sitting转换成Pedestrian；Cyclist转换成Cyclist；同时忽略掉Misc和DontCare的类。
 
-	然后，我们需要生存可以供Darknet读入的train\_list和test\_list，如图\ref{}。这里直接将图片的前7000张作为训练图片，后480张作为测试图片然后生成对应的list文件即可。
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/trainList.png}
+	\caption{Darknet标签}
+	\label{trainList}
+	\end{figure}
+	然后，我们需要生存可以供Darknet读入的train\_list和test\_list，如图\ref{trainList}。这里直接将图片的前7000张作为训练图片，后480张作为测试图片然后生成对应的list文件即可。
 }
 
 \section{网络结构}{
@@ -47,7 +77,19 @@
 }
 
 \subsection{完整网络结构YOLO}{
-	如图\ref{}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias\_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{}：
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/net.png}
+	\caption{完整网络结构YOLO}
+	\label{net}
+	\end{figure}
+	如图\ref{net}，参考YOLO和GoogLeNet模型\cite{}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias\_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{leaky}：
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/leaky.png}
+	\caption{leaky激活函数}
+	\label{leaky}
+	\end{figure}
 
 	该网络比较大，实际训练过程中所需显存较多，训练出来的模型参数更多，理论上效果也会更好，不过速度会偏慢。
 }
@@ -60,9 +102,15 @@
 }
 
 \section{验证方法}{
-	本项目将采用计算各个类别的AP（Average Precision）的方法实现对检测结果的评估。
+	本项目将采用计算各个类别的AP（Average Precision）的方法实现对检测结果的评估\cite{}。
 
-	训练好的模型对于每张图片会返回各个框的检测结果（x,y,w,h,class,precision)。而在实际验证中，每个类别会返回所有大于阈值的检测结果，如图\ref{}。每种类都有单独的文件存放检测结果，文件形式为(img\_id, Xmin, Ymin, Xmax, Ymax, score)。我们就需要用这个检测结果和原标签对比，得到最终的实验结果。
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5in]{images/results.png}
+	\caption{行人验证结果}
+	\label{results}
+	\end{figure}
+	训练好的模型对于每张图片会返回各个框的检测结果（x,y,w,h,class,precision)。而在实际验证中，每个类别会返回所有大于阈值的检测结果，如图\ref{results}。每种类都有单独的文件存放检测结果，文件形式为(img\_id, Xmin, Ymin, Xmax, Ymax, score)。我们就需要用这个检测结果和原标签对比，得到最终的实验结果。
 
 	对于每个类，AP的具体算法如下：
 

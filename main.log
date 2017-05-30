@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016) (preloaded format=xelatex 2016.12.4)  29 MAY 2017 17:43
+This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016) (preloaded format=xelatex 2016.12.4)  30 MAY 2017 08:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1356,9 +1356,11 @@ Package: CJKfntef 2015/04/18 4.8.4
 \c__xeCJK_filll_skip=\skip92
 )
 (./main.aux (./data/absc.aux) (./data/abse.aux) (./data/chap1.aux)
-(./data/chap2.aux) (./data/chap3.aux) (./data/chap4.aux) (./data/chap5.aux)
-(./data/chap6.aux) (./data/thanks.aux) (./data/appe.aux) (./data/task.aux)
-(./data/eval.aux))
+(./data/chap2.aux) (./data/chap3.aux) (./data/chap4.aux
+
+LaTeX Warning: Label `007435' multiply defined.
+
+) (./data/chap6.aux) (./data/thanks.aux) (./data/task.aux) (./data/eval.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -1377,10 +1379,12 @@ LaTeX Font Info:    Checking defaults for EU1/lmr/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 14.
 LaTeX Font Info:    Try loading font information for T3+cmr on input line 14.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/tipa/t3cmr.fd
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
 LaTeX Font Info:    ... okay on input line 14.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1562,100 +1566,60 @@ LaTeX Font Info:    Calculating math sizes for size <14> on input line 23.
 
  (./data/chap1.tex
 Chapter 1.
-
-LaTeX Warning: Citation `walk2010new' on page 1 undefined on input line 6.
-
-
-LaTeX Warning: Citation `integral' on page 1 undefined on input line 6.
-
-[1
+File: images/WRC.jpg Graphic file (type QTm)
+<use  "images/WRC.jpg" > [1
 
 
 
-]
-
-LaTeX Warning: Citation `yolo' on page 2 undefined on input line 14.
-
-
-LaTeX Warning: Citation `faster' on page 2 undefined on input line 14.
-
-
-LaTeX Warning: Citation `ssd' on page 2 undefined on input line 14.
-
-
-LaTeX Warning: Citation `fast' on page 2 undefined on input line 14.
-
-
-LaTeX Warning: Citation `rich' on page 2 undefined on input line 14.
-
-[2]) [3]
+] [2] [3]) [4]
 \openout2 = `data/chap2.aux'.
 
  (./data/chap2.tex
 Chapter 2.
-
-LaTeX Warning: Citation `walk2010new' on page 4 undefined on input line 4.
-
-
-LaTeX Warning: Citation `integral' on page 4 undefined on input line 8.
-
-
-LaTeX Warning: Citation `faster' on page 4 undefined on input line 12.
-
-[4
+File: images/JFTD.png Graphic file (type QTm)
+<use  "images/JFTD.png" >
+File: images/Faster.png Graphic file (type QTm)
+ <use  "images/Faster.png" > [5
 
 
 
 ]
+File: images/SSD.png Graphic file (type QTm)
 
-LaTeX Warning: Citation `ssd' on page 5 undefined on input line 23.
+<use  "images/SSD.png" > [6]
+File: images/YOLO.png Graphic file (type QTm)
+ <use  "images/YOLO.png" >
+File: images/YOLOMX.png Graphic file (type QTm)
 
-
-LaTeX Warning: Citation `yolo' on page 5 undefined on input line 33.
-
-[5] [6]) [7]
+<use  "images/YOLOMX.png" > [7] [8] [9]) [10]
 \openout2 = `data/chap3.aux'.
 
  (./data/chap3.tex
 Chapter 3.
+File: images/KITTIForm.jpg Graphic file (type QTm)
+<use  "images/KITTIForm.jpg" >
+File: images/007435.png Graphic file (type QTm)
+ <use  "images/007435.png" >
+File: images/KITTILable.png Graphic file (type QTm)
 
-LaTeX Warning: Reference `' on page 8 undefined on input line 5.
-
-
-LaTeX Warning: Reference `' on page 8 undefined on input line 7.
-
-
-LaTeX Warning: Reference `' on page 8 undefined on input line 9.
-
-
-LaTeX Warning: Reference `' on page 8 undefined on input line 9.
-
-
-LaTeX Warning: Reference `' on page 8 undefined on input line 14.
-
-Missing character: There is no ） in font Times New Roman/OT:script=latn;languag
-e=DFLT;mapping=tex-text;!
-[8
+<use  "images/KITTILable.png" > [11
 
 
 
-]
+] [12]
+File: images/darknetLabel.png Graphic file (type QTm)
+ <use  "images/darknetLabel.png" >
+[13]
+File: images/trainList.png Graphic file (type QTm)
+ <use  "images/trainList.png" > [14]
+File: images/net.png Graphic file (type QTm)
+ <use  "images/net.png" >
+File: images/leaky.png Graphic file (type QTm)
 
-LaTeX Warning: Reference `' on page 9 undefined on input line 26.
-
-[9]
-
-LaTeX Warning: Reference `' on page 10 undefined on input line 50.
-
-
-LaTeX Warning: Reference `' on page 10 undefined on input line 50.
-
-[10]
-
-LaTeX Warning: Reference `' on page 11 undefined on input line 65.
-
-
-Overfull \hbox (47.41139pt too wide) detected at line 73
+<use  "images/leaky.png" > [15] [16]
+File: images/results.png Graphic file (type QTm)
+ <use  "images/results.png" > [17]
+Overfull \hbox (47.41139pt too wide) detected at line 121
 \OML/cmm/m/it/12 intersection \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 max\OT1/cmr/m
 /n/12 ([]\OML/cmm/m/it/12 ; X[]\OT1/cmr/m/n/12 ) \OMS/cmsy/m/n/12 ^^@ \OML/cmm/
 m/it/12 min\OT1/cmr/m/n/12 ([]\OML/cmm/m/it/12 ; X[]\OT1/cmr/m/n/12 )) \OMS/cms
@@ -1664,51 +1628,72 @@ y/m/n/12 ^^C \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 max\OT1/cmr/m/n/12 ([]\OML/cmm/m
 /m/n/12 ([]\OML/cmm/m/it/12 ; Y[]\OT1/cmr/m/n/12 ))
  []
 
-[11]) [12]
+) [18]
 \openout2 = `data/chap4.aux'.
 
  (./data/chap4.tex
 Chapter 4.
-[13
-
-
-
-] [14]
-
-LaTeX Warning: Reference `' on page 15 undefined on input line 66.
-
-[15]) [16]
-\openout2 = `data/chap5.aux'.
-
- (./data/chap5.tex
-Chapter 5.
-) [17
+[19
 
 
 
 ]
+File: images/trainYOLO.png Graphic file (type QTm)
+ <use  "images/trainYOLO.png" >
+File: images/trainTiny-YOLO.png Graphic file (type QTm)
+ <use  "images/trainTiny-YOLO.png" >
+[20] [21]
+File: images/pedestrianPR.png Graphic file (type QTm)
+ <use  "images/pedestrianPR.png" >
+File: images/carPR.png Graphic file (type QTm)
+ <use  "images/carPR.png" >
+File: images/cyclistPR.png Graphic file (type QTm)
+
+<use  "images/cyclistPR.png" >
+File: images/007435.png Graphic file (type QTm)
+ <use  "images/007435.png" > [22] [23]
+File: images/predictYOLO.jpg Graphic file (type QTm)
+
+<use  "images/predictYOLO.jpg" >
+File: images/predictTiny-YOLO.jpg Graphic file (type QTm)
+ <use  "images/predictTiny-YOLO.jpg" > [24]
+File: images/error1.jpg Graphic file (type QTm)
+
+<use  "images/error1.jpg" >
+File: images/error2.jpg Graphic file (type QTm)
+ <use  "images/error2.jpg" >
+File: images/error3.jpg Graphic file (type QTm)
+
+<use  "images/error3.jpg" > [25]
+File: images/daily.jpg Graphic file (type QTm)
+ <use  "images/daily.jpg" >
+File: images/predictDaily.jpg Graphic file (type QTm)
+
+<use  "images/predictDaily.jpg" >
+File: images/rain.jpg Graphic file (type QTm)
+ <use  "images/rain.jpg" >
+File: images/snow.jpg Graphic file (type QTm)
+
+<use  "images/snow.jpg" >
+File: images/night.jpg Graphic file (type QTm)
+ <use  "images/night.jpg" > [26] [27] [28]) [29]
 \openout2 = `data/chap6.aux'.
 
- (./data/chap6.tex
-Chapter 6.
-[18
+
+(./data/chap6.tex
+Chapter 5.
+[30
 
 
 
-]) [19]
-No file main.bbl.
-\openout2 = `data/thanks.aux'.
-
-(./data/thanks.tex) [20
-
+]) [31] (./main.bbl) [32
 
 
 
 ]
-\openout2 = `data/appe.aux'.
+\openout2 = `data/thanks.aux'.
 
- (./data/appe.tex) [21
-
+ (./data/thanks.tex) [33
 
 
 ]
@@ -1757,32 +1742,31 @@ No file main.bbl.
 . with NFSS spec.: <->"STFangsong/OT:embolden=4;slant=0.167;"
 . - 'bold italic small caps'  (bx/itsc) with NFSS spec.: 
 .................................................
-) [22
+) [34
 
 
 
 ]
 \openout2 = `data/eval.aux'.
 
- (./data/eval.tex) [23
+ (./data/eval.tex) [35
 
 
 
 ] (./main.aux (./data/absc.aux) (./data/abse.aux)
 (./data/chap1.aux) (./data/chap2.aux) (./data/chap3.aux) (./data/chap4.aux)
-(./data/chap5.aux) (./data/chap6.aux) (./data/thanks.aux) (./data/appe.aux)
-(./data/task.aux) (./data/eval.aux))
+(./data/chap6.aux) (./data/thanks.aux) (./data/task.aux) (./data/eval.aux))
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 22361 strings out of 493591
- 444982 string characters out of 6143546
- 429877 words of memory out of 5000000
- 25370 multiletter control sequences out of 15000+600000
- 12636 words of font info for 105 fonts, out of 8000000 for 9000
+ 22443 strings out of 493591
+ 446165 string characters out of 6143546
+ 430391 words of memory out of 5000000
+ 25431 multiletter control sequences out of 15000+600000
+ 12652 words of font info for 107 fonts, out of 8000000 for 9000
  1347 hyphenation exceptions out of 8191
  55i,12n,92p,10366b,470s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (33 pages).
+Output written on main.pdf (45 pages).
