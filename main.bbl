@@ -1,9 +1,15 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{integral}
 Piotr Doll{\'a}r, Zhuowen Tu, Pietro Perona, and Serge Belongie.
 \newblock Integral channel features.
 \newblock 2009.
+
+\bibitem{VOC}
+Mark Everingham, Luc Van~Gool, Christopher~KI Williams, John Winn, and Andrew
+  Zisserman.
+\newblock The pascal visual object classes (voc) challenge.
+\newblock {\em International journal of computer vision}, 88(2):303--338, 2010.
 
 \bibitem{fast}
 Ross Girshick.
@@ -47,10 +53,21 @@ Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun.
 \newblock In {\em Advances in neural information processing systems}, pages
   91--99, 2015.
 
+\bibitem{googleNet}
+Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir
+  Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich.
+\newblock Going deeper with convolutions.
+\newblock In {\em The IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, June 2015.
+
 \bibitem{walk2010new}
 Stefan Walk, Nikodem Majer, Konrad Schindler, and Bernt Schiele.
 \newblock New features and insights for pedestrian detection.
 \newblock In {\em Computer vision and pattern recognition (CVPR), 2010 IEEE
   conference on}, pages 1030--1037. IEEE, 2010.
+
+\bibitem{RAR}
+Jian~Sun Zhaowei~Cai, Xiaodong~He.
+\newblock Deep learning with low precision by half-wave gaussian quantization.
 
 \end{thebibliography}

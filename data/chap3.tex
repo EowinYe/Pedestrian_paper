@@ -83,7 +83,7 @@
 	\caption{完整网络结构YOLO}
 	\label{net}
 	\end{figure}
-	如图\ref{net}，参考YOLO和GoogLeNet模型\cite{}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias\_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{leaky}：
+	如图\ref{net}，参考YOLO和GoogLeNet模型\cite{googleNet}，我们的网络有24个卷积层，其次是2个全连接层。部分卷积层后还连接了一些1*1的还原层。最后的卷积层使用了40个滤波器（num=5 * （class=3 + coords=4 + bias\_match=1））。除开最终层使用了线性激活函数，所有层使用以下leaky激活函数\ref{leaky}：
 	\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=5in]{images/leaky.png}
@@ -102,7 +102,7 @@
 }
 
 \section{验证方法}{
-	本项目将采用计算各个类别的AP（Average Precision）的方法实现对检测结果的评估\cite{}。
+	本项目将采用计算各个类别的AP（Average Precision）的方法实现对检测结果的评估\cite{VOC}。
 
 	\begin{figure}[htbp]
 	\centering
